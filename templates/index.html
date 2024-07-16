@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Transfers</title>
+    <style>
+        .player {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .transfer {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Player Transfers</h1>
+    <div id="transfers-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = {
+                "errors": [],
+                "get": "transfers",
+                "paging": {
+                    "current": 1,
+                    "total": 1
+                },
+                "parameters": {
+                    "team": "131"
+                },
+                "response": [
+                    {
+                        "player": {
+                            "id": 9644,
+                            "name": "Márcio de Souza Gregório Júnior"
+                        },
+                        "transfers": [
+                            {
+                                "date": "2010-01-01",
+                                "teams": {
+                                    "in": {
+                                        "id": 136,
+                                        "logo": "https://media.api-sports.io/football/teams/136.png",
+                                        "name": "Vitoria"
+                                    },
+                                    "out": {
+                                        "id": 131,
+                                        "logo": "https://media.api-sports.io/football/teams/131.png",
+                                        "name": "Corinthians"
+                                    }
+                                },
+                                "type": "Free"
+                            },
+                            {
+                                "date": "2009-05-01",
+                                "teams": {
+                                    "in": {
+                                        "id": 131,
+                                        "logo": "https://media.api-sports.io/football/teams/131.png",
+                                        "name": "Corinthians"
+                                    },
+                                    "out": {
+                                        "id": 10037,
+                                        "logo": "https://media.api-sports.io/football/teams/10037.png",
+                                        "name": "Noroeste"
+                                    }
+                                },
+                                "type": "Free"
+                            }
+                        ],
+                        "update": "2020-10-03T10:59:16+00:00"
+                    },
+                    {
+                        "player": {
+                            "id": 237949,
+                            "name": "Ewerton da Silva Souza"
+                        },
+                        "transfers": [
+                            {
+                                "date": "2015-04-01",
+                                "teams": {
+                                    "in": {
+                                        "id": null,
+                                        "logo": null,
+                                        "name": null
+                                    },
+                                    "out": {
+                                        "id": 131,
+                                        "logo": "https://media.api-sports.io/football/teams/131.png",
+                                        "name": "Corinthians"
+                                    }
+                                },
+                                "type": "Loan"
+                            },
+                            {
+                                "date": "2014-09-23",
+                                "teams": {
+                                    "in": {
+                                        "id": 129,
+                                        "logo": "https://media.api-sports.io/football/teams/129.png",
+                                        "name": "Ceara"
+                                    },
+                                    "out": {
+                                        "id": 131,
+                                        "logo": "https://media.api-sports.io/football/teams/131.png",
+                                        "name": "Corinthians"
+                                    }
+                                },
+                                "type": "Loan"
+                            }
+                        ],
+                        "update": "2020-10-03T10:59:16+00:00"
+                    }
+                ]
+            };
+
+            const container = document.getElementById('transfers-container');
+
+            data.response.forEach(playerData => {
+                const playerDiv = document.createElement('div');
+                playerDiv.classList.add('player');
+                playerDiv.innerHTML = `<h2>${playerData.player.name}</h2>`;
+
+                playerData.transfers.forEach(transfer => {
+                    const transferDiv = document.createElement('div');
+                    transferDiv.classList.add('transfer');
+                    transferDiv.innerHTML = `
+                        <p>Date: ${transfer.date}</p>
+                        <p>Type: ${transfer.type}</p>
+                        <p>From: ${transfer.teams.out.name} <img src="${transfer.teams.out.logo}" alt="${transfer.teams.out.name}" width="80"></p>
+                        <p>To: ${transfer.teams.in.name ? transfer.teams.in.name : 'Unknown'} ${transfer.teams.in.logo ? `<img src="${transfer.teams.in.logo}" alt="${transfer.teams.in.name}" width="20">` : ''}</p>
+                    `;
+                    playerDiv.appendChild(transferDiv);
+                });
+
+                container.appendChild(playerDiv);
+            });
+        });
+    </script>
+</body>
+</html>
